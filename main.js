@@ -42,3 +42,11 @@ let miniMap = new L.Control.MiniMap(
 
 // TODO: geojson laden und anzeigen
 
+async function loadBorders(url) {
+    let response = await fetch(url);
+    let geojson = await response.json();
+    console.log(`Geojson borders: `, geojson)
+    L.geoJSON(geojson).addTo(mao);
+
+}
+loadBorders("data/viertelgrenzen.geojson");
