@@ -45,8 +45,13 @@ let miniMap = new L.Control.MiniMap(
 async function loadBorders(url) {
     let response = await fetch(url);
     let geojson = await response.json();
-    console.log(`Geojson borders: `, geojson)
-    L.geoJSON(geojson).addTo(mao);
+    //console.log(`Geojson borders: `, geojson)
+    L.geoJSON(geojson, {
+        onEachFeature: function(feature, layer) {
+            console.log("Feature: ", feature);
+            layer.bindPopup(`<h4>${feature.properties.VIERTEL_NA}</h4>`)
+        },
+    }).addTo(map);
 
 }
 loadBorders("data/viertelgrenzen.geojson");
